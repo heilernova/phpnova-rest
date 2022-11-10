@@ -1,0 +1,24 @@
+{
+    "name": "phpnova/rest",
+    "description": "Library para el manejo de solocitudes HTTP",
+    "type": "library",
+    "license": "GPL-3.0-only",
+    "autoload": {
+        "psr-4": {
+            "Phpnova\\Rest\\": "src/"
+        },
+        "files": [
+            "src/Router/Funcs/_router-funcs.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Heile Nova",
+            "homepage": "https://www.novaccode.com/",
+            "email": "info@novaccode.com",
+            "rule": "developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
