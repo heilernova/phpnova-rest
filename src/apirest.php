@@ -61,6 +61,14 @@ class apirest
 foreach (get_required_files() as $file) {
     if (str_ends_with($file, 'autoload.php')) {
         apirest::set('dir', dirname($file, 2));
+        try {
+            require __DIR__ . '/Scripts/load-config.php';
+        } catch (\Throwable $th) {
+            echo $th->getMessage();
+            header('content-type: text/plain');
+            http_response_code(500);
+            exit;
+        }
         break;
     }
 }

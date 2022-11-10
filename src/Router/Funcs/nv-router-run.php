@@ -62,6 +62,6 @@ function nv_router_run(string $url, string $method): Response
 
     Request::set('files', array_map(fn($item) => new File($item), $_FILES));
 
-    $res = $res['fun']();
+    $res = $res['fun'](new Request());
     return $res instanceof Response ? $res : Response::json($res);
 }
