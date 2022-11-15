@@ -14,7 +14,7 @@ class Config
     public function getDatabase(string $name = null): array
     {
         if (is_null($name)) {
-            current(apirest::getConfigData()['databases']);
+            return current(apirest::getConfigData()['databases']);
         }
 
         return apirest::getConfigData()['databases'][$name];
