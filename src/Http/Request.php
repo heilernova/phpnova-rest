@@ -53,7 +53,7 @@ class Request
     {
         $this->url = self::$data['url'] ?? '';
         $this->method = self::$data['method'] ?? '';
-        $this->body = self::$data['body'] ;
+        $this->body = self::$data['body'] ?? null ;
         $this->files = self::$data['files'] ?? [];
         $this->params = self::$data['params'] ?? [];
         $this->queryParams = self::$data['queryParams'] ?? [];
