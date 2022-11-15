@@ -24,7 +24,7 @@ class apirest
         }
 
         if ($name == "getConfigData") {
-            self::$config;
+            return self::$config;
         }
 
         if ($name == 'addRoute') {
