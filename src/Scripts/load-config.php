@@ -24,7 +24,13 @@ if (!file_exists("$dir/env.json")) {
     $env_json['databases'] = [];
 
     foreach($index_config['databases'] as $name => $config) {
-        $env_json[$name] = ["hostname" => "localhost", "username" => "root", "", "password" => "", "databases" => "test", "port" => null];
+        $env_json['databases'][$name][$name] = [
+            "hostname" => "localhost",
+            "username" => "root",
+            "password" => "",
+            "databases" => "test",
+            "port" => null
+        ];
     }
 
     $resource = fopen("$dir/env.json", 'a+');
@@ -37,16 +43,16 @@ $env_json = json_decode("$dir/env.json", true);
 
 if (is_null($env_json)) throw new Exception("El formato del inv.json es erroneo");
 
-foreach ($index_config['databases'] as $name => $config) {
+foreach ($index_config['databases'] as $key => $config) {
 
     if (!array_key_exists($key, $env_json['databases'])) {
-        $env_json[$key] = ["hostname" => "localhost", "username" => "root", "", "password" => "", "databases" => "test", "port" => null];
-        $resource = fopen("$dir/env.json", 'a+');
+        $env_json['databases'][$key] = ["hostname" => "localhost", "username" => "root", "", "password" => "", "databases" => "test", "port" => null];
+        $resource = fopen("$dir/env.json", 'w');
         fputs($resource, json_encode($env_json, 128));
         fclose($resource);
     }
 
-    $index_config['databases'][$key]['dataConnection'] = $env_json[$key];
+    $index_config['databases'][$key]['dataConnection'] = $env_json['databases'][$key];
 }
 
 apirest::setConfig($index_config);
