@@ -28,7 +28,7 @@ if (!file_exists("$dir/env.json")) {
             "hostname" => "localhost",
             "username" => "root",
             "password" => "",
-            "databases" => "test",
+            "database" => "test",
             "port" => null
         ];
     }
@@ -53,7 +53,10 @@ foreach ($index_config['databases'] as $key => $config) {
         fclose($resource);
     }
 
-    $index_config['databases'][$key]['dataConnection'] = $env_json['databases'][$key];
+    foreach ($env_json['databases'][$key] as $name => $val) {
+        $index_config['databases'][$key][$name] = $val;
+    }
+
 }
 
 apirest::setConfig($index_config);
