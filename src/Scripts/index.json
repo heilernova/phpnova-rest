@@ -1,0 +1,10 @@
+{
+    "timezone": "UTC",
+    "databases": {
+        "default": {
+            "type": "mysql",
+            "timezone": "UTC",
+            "structure": "src/Databases"
+        }
+    }
+}
