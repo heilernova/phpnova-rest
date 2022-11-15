@@ -9,6 +9,7 @@ class apirest
     private static array $routes = [];
     private static array $request;
     private static array $data = [];
+    private static array $config = [];
 
     public static function create(): Server
     {
@@ -17,7 +18,15 @@ class apirest
 
     public static function __callStatic($name, $arguments)
     {
-        // echo $name . "\n";
+        if ($name == "setConfig") {
+            self::$config = $arguments[0];
+            return;
+        }
+
+        if ($name == "getConfigData") {
+            self::$config;
+        }
+
         if ($name == 'addRoute') {
             self::$routes[] = $arguments[0];
             return;
@@ -46,11 +55,19 @@ class apirest
         throw new ErrorRest(new Exception("Método indefinido Phpnova\\Rest\\apirest::$name"));
     }
 
+    public static function getConfig(): Config
+    {
+        return new Config();
+    }
+
     public static function getRequest(): Request
     {
         return new Request();
     }
 
+    /**
+     * Returns the directory where it is located in the project
+     */
     public static function getDir(): string
     {
         return self::$data['dir'] ?? '';
