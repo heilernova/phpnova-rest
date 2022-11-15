@@ -39,7 +39,8 @@ if (!file_exists("$dir/env.json")) {
     
     throw new Exception("Falta configurar el env.json");
 }
-$env_json = json_decode("$dir/env.json", true);
+
+$env_json = json_decode(file_get_contents("$dir/env.json"), true);
 
 if (is_null($env_json)) throw new Exception("El formato del inv.json es erroneo");
 
