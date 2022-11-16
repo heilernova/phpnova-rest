@@ -16,7 +16,7 @@
             "name": "Heile Nova",
             "homepage": "https://www.novaccode.com/",
             "email": "info@novaccode.com",
-            "rule": "developer"
+            "role": "developer"
         }
     ],
     "minimum-stability": "dev",
