@@ -59,4 +59,7 @@ foreach ($index_config['databases'] as $key => $config) {
 
 }
 
+# Establecemos la zona horaria
+date_default_timezone_set($index_config['timezone'] ?? 'UTC');
+
 apirest::setConfig($index_config);
