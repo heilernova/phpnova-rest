@@ -69,3 +69,57 @@ $app->use('/', function(){
 
 $app->run();
 ```
+
+### Personalizar las respuestas
+```php
+# Personalizamos la respues creando una función
+$app->setHandleResponse(function(Response $res): Response {
+
+    if ($res->getStatus() == 200) {
+
+        $body = [
+            "name" => "Mi api",
+            "version" => "1.0.0.BETA",
+            "developers" => [
+                {
+                    "name" => "Mi nombre",
+                    "homepage" => "https://www.miweb.com/",
+                    "email" => "miemail@email.com"
+                }
+            ]
+            "data" => $res->getBody()
+        ];
+
+        return new Response($body, $res->getStatus());
+    }
+
+    return $res;
+});
+```
+
+### Manejo de errores
+Manejo de errores arrojas en la ejecución de la aplicación
+```php
+use Throware;
+$app->setHandleError(function(\Throware $th): Response {
+    $json = [
+        "name" => "Mi api",
+        "version" => "1.0.0.BETA",
+        "developers" => [
+            {
+                "name" => "Mi nombre",
+                "homepage" => "https://www.miweb.com/",
+                "email" => "miemail@email.com"
+            }
+        ]
+        "data" => [
+            "message" => $th->getMessage(),
+            "file" => $th->getFile(),
+            "line" => $th->getLine()
+        ]
+    ];
+
+    return new Response($json, 500, 'json');
+});
+
+```
