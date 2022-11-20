@@ -123,3 +123,39 @@ $app->setHandleError(function(\Throware $th): Response {
 });
 
 ```
+
+## Definir rutas de access
+Se recomuendo utilizar un archivo
+```php
+use Phpnova\Rest\Http\Request;
+use Phpnova\Rest\Router\Route;
+
+Route::get('/saludar', fn() => 'Hola mundo');
+
+Route::get('/saludar/:nombre', function(Request $req){
+
+    $name = $req->params['nombre'];
+
+    /**
+     * Por defecto el código de estado en 200, 
+     * y el contenido sera de tipo json
+     * */
+    return "Hola $name";
+});
+
+Route::post('/saludar/:nombre', function(Request $req){
+
+    $name = $req->params['nombre'];
+
+    return Response::json("Hala $name", 404);
+});
+
+# Definir una ruta padres y rutas hijas
+Route::use('/ruta-pabre', function(){
+
+    Route::get('', fn() => 'get');
+    Route::post('', fn() => 'post');
+    Route::put(':id', fn() => 'pyt');
+
+});
+```
