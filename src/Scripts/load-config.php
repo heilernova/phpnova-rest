@@ -54,7 +54,7 @@ foreach ($index_config['databases'] as $key => $config) {
     }
 
     foreach ($env_json['databases'][$key] as $name => $val) {
-        $index_config['databases'][$key][$name] = $val;
+        $index_config['databases'][$name] = $val;
     }
 
 }
