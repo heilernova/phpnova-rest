@@ -24,7 +24,7 @@ if (!file_exists("$dir/env.json")) {
     $env_json['databases'] = [];
 
     foreach($index_config['databases'] as $name => $config) {
-        $env_json['databases'][$name][$name] = [
+        $env_json['databases'][$name] = [
             "hostname" => "localhost",
             "username" => "root",
             "password" => "",
@@ -47,14 +47,14 @@ if (is_null($env_json)) throw new Exception("El formato del inv.json es erroneo"
 foreach ($index_config['databases'] as $key => $config) {
 
     if (!array_key_exists($key, $env_json['databases'])) {
-        $env_json['databases'][$key] = ["hostname" => "localhost", "username" => "root", "", "password" => "", "databases" => "test", "port" => null];
+        $env_json['databases'][$key] = ["hostname" => "localhost", "username" => "root", "password" => "", "databases" => "test", "port" => null];
         $resource = fopen("$dir/env.json", 'w');
         fputs($resource, json_encode($env_json, 128));
         fclose($resource);
     }
 
     foreach ($env_json['databases'][$key] as $name => $val) {
-        $index_config['databases'][$name] = $val;
+        $index_config['databases'][$key][$name]  = $val;
     }
 
 }
