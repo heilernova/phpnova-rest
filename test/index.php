@@ -12,7 +12,10 @@ $app = new Server();
 
 
 $app->use('/', function(){
-    Route::get('', fn() => 'Hola mundo');
+    Route::get('', function(){
+        return apirest::getConfig()->getDatabase();
+    });
+
     Route::get('saludar', function(){
 
         $req = new Request();
