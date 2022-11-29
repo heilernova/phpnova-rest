@@ -123,3 +123,10 @@ $app->setHandleError(function(\Throware $th): Response {
 });
 
 ```
+
+## Definir ruta
+```php
+use Phpnova\Rest\Router\Route;
+
+Route::get('saludar', fn() => "Hola");
+```
