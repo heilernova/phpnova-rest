@@ -54,7 +54,7 @@ function nv_router_run(string $url, string $method): Response
                 break;
             }
             
-            $body = __DIR__ . '/../../Http/Scripts/script-http-parce-body.php';
+            $body = require __DIR__ . '/../../Http/Scripts/script-http-parce-body.php';
             Request::set('body', $body);
             break;
         default: break;
