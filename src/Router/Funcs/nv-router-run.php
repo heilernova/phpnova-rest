@@ -43,7 +43,7 @@ function nv_router_run(string $url, string $method): Response
         case "multipart/form-data":
             if ($method == 'POST' && $method != 'GET'){
                 $body = array_map(array: $_POST, callback: function($item){
-                    if ( preg_match('/^\{?.+\}/', $$item) > 0 || preg_match('/^\[?.+\]/', $$item) > 0){
+                    if ( preg_match('/^\{?.+\}/', $item) > 0 || preg_match('/^\[?.+\]/', $item) > 0){
                         $json = json_decode($item);
                         return json_last_error() == JSON_ERROR_NONE ? $json : $item;
                     }
