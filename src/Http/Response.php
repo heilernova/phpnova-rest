@@ -33,19 +33,19 @@ class Response
     public function __call($name, $arguments)
     {
         if ($name == "send") {
-
-            echo match($this->type) {
-                'json' => json_encode($this->body),
-                'text-plain' => $this->body,
-                'file' => file_get_contents($this->body)
-            };
-
+            
             header('content-type: ' . match($this->type){ 
                 'json' => 'application/json',
                 'html' => 'text/html',
                 'text-plain' => 'text-plain',
                 'file' => HttpFuns::getContentType((new SplFileInfo($this->body))->getExtension())
             });
+
+            echo match($this->type) {
+                'json' => json_encode($this->body),
+                'text-plain' => $this->body,
+                'file' => file_get_contents($this->body)
+            };
 
             http_response_code($this->status);
         }
