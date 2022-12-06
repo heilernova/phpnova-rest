@@ -43,7 +43,7 @@ class Request
 
     /** 
      * Device from which the HTTP request is being made
-     * @return 'desktop'|'mobile'|'table'
+     * @return 'desktop' | 'mobile' | 'table'
      */
     public readonly string $device;
 
@@ -72,5 +72,34 @@ class Request
         }
         
         throw new ErrorRest(new Exception("Error en el llamado del método Phpnova\\Rest\\Http\\Request::$name"));
+    }
+
+
+    /**
+     * Gets the content of a header, returns null if the haeder is found
+     * @param string $name macthing both upper and lower case
+     */
+    public function getHeader(string $name): ?string
+    {
+        $headers = apache_request_headers();
+        return $headers[$name] ??
+        $headers[strtolower($name)] ??
+        $headers[strtoupper($name)] ??
+        null;
+    }
+
+    public function isTable(): bool
+    {
+        return $this->device == "table";
+    }
+
+    public function isMobile(): bool
+    {
+        return $this->device == "mobile";
+    }
+
+    public function isDesktop(): bool
+    {
+        return $this->device = "desktop";
     }
 }
