@@ -20,7 +20,14 @@ if (is_null($index_config)) throw new Exception("El formato del index.json es er
 
 # Verifacmos en el env.json exista
 if (!file_exists("$dir/env.json")) {
-
+    
+    $env_json['cors'] = [
+        '/' => [
+            'methdos' => null,
+            'headers' => null,
+            'origin' => null
+        ]
+    ];
     $env_json['databases'] = [];
 
     foreach($index_config['databases'] as $name => $config) {
