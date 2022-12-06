@@ -1,6 +1,9 @@
 <?php
 namespace Phpnova\Rest;
 
+use Phpnova\Rest\Settings\DatabaseConfig;
+use Phpnova\Rest\Settings\DatabasesSettings;
+
 class Config
 {
     public function getTimezone(): string
@@ -8,15 +11,8 @@ class Config
         return apirest::getConfigData()['timezone'];
     }
 
-    /**
-     * Retorna un array asociativo de la configuración de la base de datos
-     */
-    public function getDatabase(string $name = null): array
+    public function getDatabases(): DatabasesSettings
     {
-        if (is_null($name)) {
-            return current(apirest::getConfigData()['databases']);
-        }
-
-        return apirest::getConfigData()['databases'][$name];
+        return new DatabasesSettings();
     }
 }
