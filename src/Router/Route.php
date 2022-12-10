@@ -50,31 +50,33 @@ class Route
 
     public static function use(mixed ...$args): void
     {
-        try {
-            $num_args = count($args);
-            if ($num_args == 1){
+        $num_args = count($args);
+        switch ($num_args){
+            case 1: # Middleware
                 if (!is_callable($args[0])) {
-                    throw new Exception("El parametro debe ser una función [callable]");
+                    throw new ErrorRest("El parametro debe ser una función [callable]");
                 }
                 self::_register('middleware', $args[0]);
-            } elseif ($num_args == 2) {
-                if (!is_string($args[0])) {
-                    throw new Exception("El primer parametro debe ser un string de la ruta");
-                }
-                if (!is_callable($args[1])) {
-                    throw new Exception("El segundo parametro de ser una función [callable]");
-                }
+                break;
+
+            case 2: # Router
+                if (!is_string($args[0])) throw new ErrorRest("El primer parametro debe ser un string de la ruta");
+                if (!is_callable($args[1])) throw new ErrorRest("El segundo parametro de ser una función [callable]");
                 
                 self::_register(
                     type: 'router',
                     path: $args[0],
                     acction: $args[1]
                 );
-            } else {
-                throw new Exception("Las función solo permite maximo 2 argumentos");
-            }            
-        } catch (\Throwable $th) {
-            throw ErrorRest::next($th);
+                break;
+
+                case 0: # Error
+                throw new ErrorRest("La función requiere como minimo un argumento");
+                break;
+
+            default: # Error
+                throw new ErrorRest("Las función solo permite maximo 2 argumentos");
+                break;
         }
     }
 
