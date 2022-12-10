@@ -1,6 +1,8 @@
 <?php
 namespace Phpnova\Rest\Http;
 
+use Exception;
+use Phpnova\Rest\ErrorRest;
 use SplFileInfo;
 
 class Response
@@ -20,9 +22,18 @@ class Response
         return new Response($text, $status, "text-plain");
     }
 
+    /**
+     * @throws ErrorRest Returns an exception in case the file path is wrong
+     */
     public static function file(string $path, int $status = 200)
     {
-        return new Response($path, $status, 'file');
+        if (!file_exists($path)) throw new ErrorRest(new Exception("La ruta del archivo es erronea"));
+        return new Response($path, $status, "file");
+    }
+
+    public static function sendStatus(int $status = 200): Response
+    {
+        return new Response(null, $status);
     }
 
     public function __construct(private mixed $body, private int $status = 200, private string $type = "json")
