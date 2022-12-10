@@ -22,7 +22,12 @@ class Response
 
     public static function file(string $path, int $status = 200)
     {
-        return new Response($path, $status, 'file');
+        return new Response($path, $status, "file");
+    }
+
+    public static function sendStatus(int $status = 200): Response
+    {
+        return new Response(null, $status);
     }
 
     public function __construct(private mixed $body, private int $status = 200, private string $type = "json")
