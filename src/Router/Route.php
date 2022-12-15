@@ -4,9 +4,12 @@ namespace Phpnova\Rest\Router;
 use Exception;
 use Phpnova\Rest\apirest;
 use Phpnova\Rest\ErrorRest;
+use ReflectionClass;
 
 class Route
 {
+    private static AddRoute $addRoute;
+
     private static function _register(string $type,  callable $acction, string $path = null, string $method = null): void
     {
         try {
@@ -46,6 +49,11 @@ class Route
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public static function add(string $path): AddRoute
+    {
+        return self::$addRoute->setPath($path);
     }
 
     public static function use(mixed ...$args): void
@@ -90,7 +98,7 @@ class Route
                 acction: $action
             );
         } catch (\Throwable $th) {
-            throw ErrorRest::next($th);
+            throw new ErrorRest($th);
         }
     }
 
@@ -104,7 +112,7 @@ class Route
                 acction: $action
             );
         } catch (\Throwable $th) {
-            throw ErrorRest::next($th);
+            throw new ErrorRest($th);
         }
     }
 
@@ -118,7 +126,7 @@ class Route
                 acction: $action
             );
         } catch (\Throwable $th) {
-            throw ErrorRest::next($th);
+            throw new ErrorRest($th);
         }
     }
 
@@ -132,7 +140,7 @@ class Route
                 acction: $action
             );
         } catch (\Throwable $th) {
-            throw ErrorRest::next($th);
+            throw new ErrorRest($th);
         }
     }
 
@@ -146,7 +154,11 @@ class Route
                 acction: $action
             );
         } catch (\Throwable $th) {
-            throw ErrorRest::next($th);
+            throw new ErrorRest($th);
         }
     }
 }
+
+$refle = new ReflectionClass(Route::class);
+$refle->setStaticPropertyValue('addRoute', new AddRoute());
+unset($refle);
