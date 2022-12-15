@@ -55,7 +55,8 @@ class Response
             echo match($this->type) {
                 'json' => json_encode($this->body),
                 'text-plain' => $this->body,
-                'file' => file_get_contents($this->body)
+                'file' => file_get_contents($this->body),
+                'html' => $this->body
             };
 
             http_response_code($this->status);
